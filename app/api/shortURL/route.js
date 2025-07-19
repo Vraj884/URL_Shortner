@@ -35,7 +35,7 @@ export async function POST(request) {
     while (!isUnique) {
       shortCode = generateShortCode();
       const existing = await UrlSchema.findOne({ shortCode });
-      console.log(existing);      
+      console.log(existing);
       if (!existing) {
         isUnique = true;
       }
@@ -46,9 +46,15 @@ export async function POST(request) {
 
     const fullShortUrl = `${process.env.BASE_URL}/${shortCode}`;
     revalidatePath(`/${shortCode}`, "page");
+    await fetch(`${process.env.BASE_URL}/${shortCode}`, {
+      headers: {
+        "x-prerender": "true",
+      },
+    });
 
-    
-    
+
+
+
     return NextResponse.json({ url: fullShortUrl }, { status: 200 });
   } catch (error) {
     console.error("POST error:", error);
