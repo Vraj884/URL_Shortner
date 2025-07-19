@@ -2,7 +2,8 @@ import UrlSchema from "@/model/UrlSchema"
 import { connectDB } from "@/utils/connectDB"
 import { notFound, redirect } from "next/navigation"
 
-export const dynamicParams = true;
+export const dynamicParams = true; 
+export const revalidate = false;
 
 const page = async({params}) => {
   const {id} = params

@@ -45,7 +45,8 @@ export async function POST(request) {
     await data.save();
 
     const fullShortUrl = `${process.env.BASE_URL}/${shortCode}`;
-    revalidatePath(`/${shortCode}`);
+    revalidatePath(`/${shortCode}`, "page");
+
     
     
     return NextResponse.json({ url: fullShortUrl }, { status: 200 });
