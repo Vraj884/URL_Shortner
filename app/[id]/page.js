@@ -1,14 +1,11 @@
 import UrlSchema from "@/model/UrlSchema";
 import { connectDB } from "@/utils/connectDB";
-import { headers } from "next/headers"; 
+import { notFound, redirect } from "next/navigation";
 
-export const dynamicParams = true;
-export const revalidate = 60;
+export const dynamicParams = true; 
 
 const page = async ({ params }) => {
   const { id } = params;
-  const headersList = headers();
-  const isPrerender = headersList.get("x-prerender") === "true";
 
   await connectDB();
   const doc = await UrlSchema.findOne({ shortCode: id });
@@ -17,17 +14,12 @@ const page = async ({ params }) => {
     notFound();
   }
 
-  if (!isPrerender) {
-    redirect(doc.longUrl);
-  }
-
-  // ISR needs to render something to generate the static page
-  return null; 
+  redirect(doc.longUrl);
 };
 
 export async function generateStaticParams() {
   await connectDB();
-  const docs = await UrlSchema.find();
+  const docs = await UrlSchema.find().limit(20);
   return docs.map((doc) => ({ id: doc.shortCode }));
 }
 

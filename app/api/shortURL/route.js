@@ -1,7 +1,6 @@
 import UrlSchema from "@/model/UrlSchema";
 import { connectDB } from "@/utils/connectDB";
 import { NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
 
 function isValidHttpUrl(string) {
   try {
@@ -35,7 +34,6 @@ export async function POST(request) {
     while (!isUnique) {
       shortCode = generateShortCode();
       const existing = await UrlSchema.findOne({ shortCode });
-      console.log(existing);
       if (!existing) {
         isUnique = true;
       }
@@ -45,15 +43,10 @@ export async function POST(request) {
     await data.save();
 
     const fullShortUrl = `${process.env.BASE_URL}/${shortCode}`;
-    revalidatePath(`/${shortCode}`, "page");
-    await fetch(`${process.env.BASE_URL}/${shortCode}`, {
-      headers: {
-        "x-prerender": "true",
-      },
+
+    await fetch(fullShortUrl, {
+      headers: { "x-prerender": "true" }, 
     });
-
-
-
 
     return NextResponse.json({ url: fullShortUrl }, { status: 200 });
   } catch (error) {
