@@ -1,3 +1,4 @@
+import UrlSchema from "@/model/UrlSchema";
 import { connectDB } from "@/utils/connectDB";
 import { headers } from "next/headers"; 
 
