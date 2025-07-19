@@ -47,7 +47,6 @@ export async function POST(request) {
     const fullShortUrl = `${process.env.BASE_URL}/${shortCode}`;
     revalidatePath(`/${shortCode}`);
     
-    console.log("done revalidating")
     
     return NextResponse.json({ url: fullShortUrl }, { status: 200 });
   } catch (error) {
