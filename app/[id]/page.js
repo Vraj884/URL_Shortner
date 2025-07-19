@@ -6,7 +6,7 @@ export const dynamicParams = true;
 
 const page = async ({ params }) => {
   const { id } = params;
-
+  
   await connectDB();
   const doc = await UrlSchema.findOne({ shortCode: id });
 
