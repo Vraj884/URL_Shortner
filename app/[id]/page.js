@@ -1,3 +1,4 @@
+import { connectDB } from "@/utils/connectDB";
 import { headers } from "next/headers"; 
 
 export const dynamicParams = true;
