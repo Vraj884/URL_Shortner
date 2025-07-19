@@ -1,36 +1,169 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🔗 URLShortner884
 
-## Getting Started
+A full-stack URL Shortener web app built with **Next.js 14 App Router**, **MongoDB**, and **Tailwind CSS**. Users can enter long URLs and receive unique short links that redirect to the original URL.
 
-First, run the development server:
+> Demonstrates dynamic routing, API routes, server-side redirection, error handling, and MongoDB integration.
+
+---
+
+## 🚀 Features
+
+- 🔗 Shortens any valid URL
+- ⚡️ Server-side redirection using dynamic `[id]` route
+- 💾 MongoDB + Mongoose for persistent storage
+- 📤 API route for creating short links
+- ❌ Custom 404 page
+- 🚨 Scoped error handling per route
+- 💅 Responsive UI with Tailwind CSS
+- 📄 Google Fonts (`Montserrat`, `Quicksand`) for improved typography
+
+---
+
+## 🧠 Tech Stack
+
+- [Next.js 14 (App Router)](https://nextjs.org/docs/app)
+- [MongoDB + Mongoose](https://mongoosejs.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Vercel (Recommended for Deployment)](https://vercel.com/)
+- Google Fonts via `next/font`
+
+---
+
+## 🗂️ Folder Structure
+
+```
+/app
+├── api/
+│   └── shortURL/route.js     → API POST to shorten URL
+├── [id]/                     → Dynamic redirect route
+│   ├── page.jsx              → Finds shortCode & redirects
+│   └── error.js              → Scoped error UI for [id]
+├── not-found.js              → Global 404 page
+├── layout.js                 → Shared layout wrapper
+└── page.jsx                  → Home page with form
+
+/components
+└── UrlForm.jsx               → Controlled form UI
+
+/model
+└── UrlSchema.js              → Mongoose schema for URLs
+
+/utils
+└── connectDB.js              → MongoDB connection helper
+```
+
+---
+
+## 🛠️ Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Vraj884/URL_Shortner.git
+cd URL_Shortner
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Setup Environment Variables
+
+Create a `.env` file in the root:
+
+```env
+MONGO_URI=your_mongodb_connection_string
+BASE_URL=http://localhost:3000
+```
+
+> If deployed on Vercel, set:  
+> `BASE_URL=https://your-vercel-project.vercel.app`
+
+### 4. Run the Dev Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📦 API Endpoint
 
-## Learn More
+### `POST /api/shortURL`
 
-To learn more about Next.js, take a look at the following resources:
+**Request:**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```json
+{
+  "url": "https://example.com"
+}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Response:**
 
-## Deploy on Vercel
+```json
+{
+  "url": "http://localhost:3000/abc123"
+}
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🧪 URL Validation
+
+- URL must begin with `http://` or `https://`
+- Both client-side and server-side validation
+- Unique short code is auto-generated and saved
+- Graceful error messages on failure or duplicates
+
+---
+
+## 📸 Screenshots
+
+### Input View  
+![Sending URL](/public/LongURL.png)
+
+### Output View  
+![Shortened URL](/public/ShortURL.png)
+
+> _Make sure these image paths are correct or adjust as needed for GitHub preview._
+
+---
+
+## 🌐 Deployment
+
+This app is optimized for deployment on [Vercel](https://vercel.com/).  
+To deploy:
+
+1. Push the project to GitHub
+2. Connect your GitHub repo to Vercel
+3. Add environment variables (`MONGO_URI`, `BASE_URL`)
+4. Deploy!
+
+---
+
+## 🧩 Planned Features
+
+- 🔐 User authentication for link history
+- 📊 Click analytics and logs
+- ⏳ Expiry and time-limited links
+- 🎛️ Admin dashboard for managing URLs
+- ⚔️ API rate limiting for abuse prevention
+
+---
+
+## 🙋‍♂️ Author
+
+**Vraj Patel**  
+Feel free to fork, contribute, or connect with me!
+
+---
+
+## 📝 License
+
+This project is licensed under the **MIT License**.  
+You are free to use, modify, and distribute it with attribution.
